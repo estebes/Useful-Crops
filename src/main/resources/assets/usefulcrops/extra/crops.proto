@@ -1,0 +1,47 @@
+option java_package = "com.estebes.usefulcrops.crops";
+option java_outer_classname = "Crops";
+
+message CropInfo {
+    enum CropType {
+        CROP_FLOWER_1 = 0;
+        CROP_FLOWER_2 = 1;
+        CROP_PLANT_1 = 2;
+        CROP_PLANT_2 = 3;
+        CROP_PLANT_3 = 4;
+    }
+    
+    required CropType cropType = 1 [default = CROP_PLANT_1];
+    
+    required string cropName = 2;
+    optional string cropDiscoveredBy = 3 [default = "estebes"];
+    optional string cropAttributes = 4 [default = ""];
+    required int32 cropTier = 5;
+
+    optional string cropGrowthDuration = 6;
+    
+    required string cropColor = 7 [default = "#FFFFFF"];
+    
+    message CropDrops {
+        required string cropDrop = 1 [default = ""];
+        required float cropDropChance = 2 [default = 0.95];
+        optional string cropSpecialDrop = 3;
+        optional float cropSpecialDropChance = 4 [default = 0.1];
+    }
+    
+    optional CropDrops cropDrops = 8;
+
+    message CropConditions {
+        optional int32 cropMinimumLL = 1;
+        optional int32 cropMaximumLL = 2;
+        optional string cropRoot = 3 [default = ""];
+        optional bool cropIsRootOD = 4 [default = false];
+    }
+
+    optional CropConditions cropConditions = 9;
+    
+    optional string cropBaseSeed = 10 [default = ""];
+}
+
+message CropsList {
+    repeated CropInfo cropInfo = 1;
+}

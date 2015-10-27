@@ -1,0 +1,21 @@
+[
+{
+"modid": "IC2Additions",
+"name": "IC2Additions",
+"description": "",
+"version": "@VERSION@",
+"mcversion": "1.7.10",
+"url": "",
+"updateUrl": "",
+"authorList": [
+"estebes"
+],
+"credits": "People",
+"logoFile": "",
+"screenshots": [
+],
+"parent":"",
+"dependencies": [
+]
+}
+]
