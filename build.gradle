@@ -17,8 +17,8 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-0.3"
-group= "com.estebes.usefulcrops" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "1.7.10-0.5"
+group= "com.estebes.usefulcrops"
 archivesBaseName = "Useful_Crops"
 
 minecraft {

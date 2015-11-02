@@ -2,7 +2,8 @@ package com.estebes.usefulcrops.crops;
 
 import com.estebes.usefulcrops.UsefulCrops;
 import com.estebes.usefulcrops.crops.Crops.CropInfo;
-
+import com.estebes.usefulcrops.crops.croptypes.CropFlowerType1;
+import com.estebes.usefulcrops.crops.croptypes.CropMushroomType1;
 import com.estebes.usefulcrops.crops.croptypes.CropPlantType1;
 import com.google.protobuf.TextFormat;
 
@@ -30,7 +31,14 @@ public class CropParser {
                 case CROP_PLANT_1:
                     ic2.api.crops.Crops.instance.registerCrop(new CropPlantType1(new CropProperties(cropInfo)));
                     break;
+                case CROP_FLOWER_1:
+                    ic2.api.crops.Crops.instance.registerCrop(new CropFlowerType1(new CropProperties(cropInfo)));
+                    break;
+                case CROP_MUSHROOM_1:
+                    ic2.api.crops.Crops.instance.registerCrop(new CropMushroomType1(new CropProperties(cropInfo)));
+                    break;
             }
         }
+        //ic2.api.crops.Crops.instance.registerCrop(new CropSpecialEnet());
     }
 }

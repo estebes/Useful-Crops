@@ -1,9 +1,9 @@
 [
 {
-"modid": "IC2Additions",
-"name": "IC2Additions",
+"modid": "UsefulCrops",
+"name": "UsefulCrops",
 "description": "",
-"version": "@VERSION@",
+"version": "0.5",
 "mcversion": "1.7.10",
 "url": "",
 "updateUrl": "",

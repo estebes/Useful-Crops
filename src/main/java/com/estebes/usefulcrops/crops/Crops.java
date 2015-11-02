@@ -22,15 +22,15 @@ public final class Crops {
     com.estebes.usefulcrops.crops.Crops.CropInfo.CropType getCropType();
 
     /**
-     * <code>required string cropName = 2;</code>
+     * <code>required string cropName = 2 [default = ""];</code>
      */
     boolean hasCropName();
     /**
-     * <code>required string cropName = 2;</code>
+     * <code>required string cropName = 2 [default = ""];</code>
      */
     java.lang.String getCropName();
     /**
-     * <code>required string cropName = 2;</code>
+     * <code>required string cropName = 2 [default = ""];</code>
      */
     com.google.protobuf.ByteString
         getCropNameBytes();
@@ -64,24 +64,24 @@ public final class Crops {
         getCropAttributesBytes();
 
     /**
-     * <code>required int32 cropTier = 5;</code>
+     * <code>required int32 cropTier = 5 [default = 1];</code>
      */
     boolean hasCropTier();
     /**
-     * <code>required int32 cropTier = 5;</code>
+     * <code>required int32 cropTier = 5 [default = 1];</code>
      */
     int getCropTier();
 
     /**
-     * <code>optional string cropGrowthDuration = 6;</code>
+     * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
      */
     boolean hasCropGrowthDuration();
     /**
-     * <code>optional string cropGrowthDuration = 6;</code>
+     * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
      */
     java.lang.String getCropGrowthDuration();
     /**
-     * <code>optional string cropGrowthDuration = 6;</code>
+     * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
      */
     com.google.protobuf.ByteString
         getCropGrowthDurationBytes();
@@ -139,6 +139,20 @@ public final class Crops {
      */
     com.google.protobuf.ByteString
         getCropBaseSeedBytes();
+
+    /**
+     * <code>optional string cropPoison = 11 [default = ""];</code>
+     */
+    boolean hasCropPoison();
+    /**
+     * <code>optional string cropPoison = 11 [default = ""];</code>
+     */
+    java.lang.String getCropPoison();
+    /**
+     * <code>optional string cropPoison = 11 [default = ""];</code>
+     */
+    com.google.protobuf.ByteString
+        getCropPoisonBytes();
   }
   /**
    * Protobuf type {@code CropInfo}
@@ -270,6 +284,12 @@ public final class Crops {
               cropBaseSeed_ = bs;
               break;
             }
+            case 90: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000400;
+              cropPoison_ = bs;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -334,6 +354,14 @@ public final class Crops {
        * <code>CROP_PLANT_3 = 4;</code>
        */
       CROP_PLANT_3(4, 4),
+      /**
+       * <code>CROP_MUSHROOM_1 = 5;</code>
+       */
+      CROP_MUSHROOM_1(5, 5),
+      /**
+       * <code>CROP_MUSHROOM_2 = 6;</code>
+       */
+      CROP_MUSHROOM_2(6, 6),
       ;
 
       /**
@@ -356,6 +384,14 @@ public final class Crops {
        * <code>CROP_PLANT_3 = 4;</code>
        */
       public static final int CROP_PLANT_3_VALUE = 4;
+      /**
+       * <code>CROP_MUSHROOM_1 = 5;</code>
+       */
+      public static final int CROP_MUSHROOM_1_VALUE = 5;
+      /**
+       * <code>CROP_MUSHROOM_2 = 6;</code>
+       */
+      public static final int CROP_MUSHROOM_2_VALUE = 6;
 
 
       public final int getNumber() { return value; }
@@ -367,6 +403,8 @@ public final class Crops {
           case 2: return CROP_PLANT_1;
           case 3: return CROP_PLANT_2;
           case 4: return CROP_PLANT_3;
+          case 5: return CROP_MUSHROOM_1;
+          case 6: return CROP_MUSHROOM_2;
           default: return null;
         }
       }
@@ -446,25 +484,25 @@ public final class Crops {
       float getCropDropChance();
 
       /**
-       * <code>optional string cropSpecialDrop = 3;</code>
+       * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
        */
       boolean hasCropSpecialDrop();
       /**
-       * <code>optional string cropSpecialDrop = 3;</code>
+       * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
        */
       java.lang.String getCropSpecialDrop();
       /**
-       * <code>optional string cropSpecialDrop = 3;</code>
+       * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
        */
       com.google.protobuf.ByteString
           getCropSpecialDropBytes();
 
       /**
-       * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+       * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
        */
       boolean hasCropSpecialDropChance();
       /**
-       * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+       * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
        */
       float getCropSpecialDropChance();
     }
@@ -642,13 +680,13 @@ public final class Crops {
       public static final int CROPSPECIALDROP_FIELD_NUMBER = 3;
       private java.lang.Object cropSpecialDrop_;
       /**
-       * <code>optional string cropSpecialDrop = 3;</code>
+       * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
        */
       public boolean hasCropSpecialDrop() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional string cropSpecialDrop = 3;</code>
+       * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
        */
       public java.lang.String getCropSpecialDrop() {
         java.lang.Object ref = cropSpecialDrop_;
@@ -665,7 +703,7 @@ public final class Crops {
         }
       }
       /**
-       * <code>optional string cropSpecialDrop = 3;</code>
+       * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
        */
       public com.google.protobuf.ByteString
           getCropSpecialDropBytes() {
@@ -684,13 +722,13 @@ public final class Crops {
       public static final int CROPSPECIALDROPCHANCE_FIELD_NUMBER = 4;
       private float cropSpecialDropChance_;
       /**
-       * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+       * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
        */
       public boolean hasCropSpecialDropChance() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+       * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
        */
       public float getCropSpecialDropChance() {
         return cropSpecialDropChance_;
@@ -700,7 +738,7 @@ public final class Crops {
         cropDrop_ = "";
         cropDropChance_ = 0.95F;
         cropSpecialDrop_ = "";
-        cropSpecialDropChance_ = 0.1F;
+        cropSpecialDropChance_ = 0F;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -883,7 +921,7 @@ public final class Crops {
           bitField0_ = (bitField0_ & ~0x00000002);
           cropSpecialDrop_ = "";
           bitField0_ = (bitField0_ & ~0x00000004);
-          cropSpecialDropChance_ = 0.1F;
+          cropSpecialDropChance_ = 0F;
           bitField0_ = (bitField0_ & ~0x00000008);
           return this;
         }
@@ -1106,13 +1144,13 @@ public final class Crops {
 
         private java.lang.Object cropSpecialDrop_ = "";
         /**
-         * <code>optional string cropSpecialDrop = 3;</code>
+         * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
          */
         public boolean hasCropSpecialDrop() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
         /**
-         * <code>optional string cropSpecialDrop = 3;</code>
+         * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
          */
         public java.lang.String getCropSpecialDrop() {
           java.lang.Object ref = cropSpecialDrop_;
@@ -1129,7 +1167,7 @@ public final class Crops {
           }
         }
         /**
-         * <code>optional string cropSpecialDrop = 3;</code>
+         * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
          */
         public com.google.protobuf.ByteString
             getCropSpecialDropBytes() {
@@ -1145,7 +1183,7 @@ public final class Crops {
           }
         }
         /**
-         * <code>optional string cropSpecialDrop = 3;</code>
+         * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
          */
         public Builder setCropSpecialDrop(
             java.lang.String value) {
@@ -1158,7 +1196,7 @@ public final class Crops {
           return this;
         }
         /**
-         * <code>optional string cropSpecialDrop = 3;</code>
+         * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
          */
         public Builder clearCropSpecialDrop() {
           bitField0_ = (bitField0_ & ~0x00000004);
@@ -1167,7 +1205,7 @@ public final class Crops {
           return this;
         }
         /**
-         * <code>optional string cropSpecialDrop = 3;</code>
+         * <code>optional string cropSpecialDrop = 3 [default = ""];</code>
          */
         public Builder setCropSpecialDropBytes(
             com.google.protobuf.ByteString value) {
@@ -1180,21 +1218,21 @@ public final class Crops {
           return this;
         }
 
-        private float cropSpecialDropChance_ = 0.1F;
+        private float cropSpecialDropChance_ ;
         /**
-         * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+         * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
          */
         public boolean hasCropSpecialDropChance() {
           return ((bitField0_ & 0x00000008) == 0x00000008);
         }
         /**
-         * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+         * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
          */
         public float getCropSpecialDropChance() {
           return cropSpecialDropChance_;
         }
         /**
-         * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+         * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
          */
         public Builder setCropSpecialDropChance(float value) {
           bitField0_ |= 0x00000008;
@@ -1203,11 +1241,11 @@ public final class Crops {
           return this;
         }
         /**
-         * <code>optional float cropSpecialDropChance = 4 [default = 0.1];</code>
+         * <code>optional float cropSpecialDropChance = 4 [default = 0];</code>
          */
         public Builder clearCropSpecialDropChance() {
           bitField0_ = (bitField0_ & ~0x00000008);
-          cropSpecialDropChance_ = 0.1F;
+          cropSpecialDropChance_ = 0F;
           onChanged();
           return this;
         }
@@ -1228,20 +1266,20 @@ public final class Crops {
         com.google.protobuf.MessageOrBuilder {
 
       /**
-       * <code>optional int32 cropMinimumLL = 1;</code>
+       * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
        */
       boolean hasCropMinimumLL();
       /**
-       * <code>optional int32 cropMinimumLL = 1;</code>
+       * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
        */
       int getCropMinimumLL();
 
       /**
-       * <code>optional int32 cropMaximumLL = 2;</code>
+       * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
        */
       boolean hasCropMaximumLL();
       /**
-       * <code>optional int32 cropMaximumLL = 2;</code>
+       * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
        */
       int getCropMaximumLL();
 
@@ -1384,13 +1422,13 @@ public final class Crops {
       public static final int CROPMINIMUMLL_FIELD_NUMBER = 1;
       private int cropMinimumLL_;
       /**
-       * <code>optional int32 cropMinimumLL = 1;</code>
+       * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
        */
       public boolean hasCropMinimumLL() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>optional int32 cropMinimumLL = 1;</code>
+       * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
        */
       public int getCropMinimumLL() {
         return cropMinimumLL_;
@@ -1399,13 +1437,13 @@ public final class Crops {
       public static final int CROPMAXIMUMLL_FIELD_NUMBER = 2;
       private int cropMaximumLL_;
       /**
-       * <code>optional int32 cropMaximumLL = 2;</code>
+       * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
        */
       public boolean hasCropMaximumLL() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional int32 cropMaximumLL = 2;</code>
+       * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
        */
       public int getCropMaximumLL() {
         return cropMaximumLL_;
@@ -1470,7 +1508,7 @@ public final class Crops {
 
       private void initFields() {
         cropMinimumLL_ = 0;
-        cropMaximumLL_ = 0;
+        cropMaximumLL_ = 15;
         cropRoot_ = "";
         cropIsRootOD_ = false;
       }
@@ -1643,7 +1681,7 @@ public final class Crops {
           super.clear();
           cropMinimumLL_ = 0;
           bitField0_ = (bitField0_ & ~0x00000001);
-          cropMaximumLL_ = 0;
+          cropMaximumLL_ = 15;
           bitField0_ = (bitField0_ & ~0x00000002);
           cropRoot_ = "";
           bitField0_ = (bitField0_ & ~0x00000004);
@@ -1752,19 +1790,19 @@ public final class Crops {
 
         private int cropMinimumLL_ ;
         /**
-         * <code>optional int32 cropMinimumLL = 1;</code>
+         * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
          */
         public boolean hasCropMinimumLL() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
         /**
-         * <code>optional int32 cropMinimumLL = 1;</code>
+         * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
          */
         public int getCropMinimumLL() {
           return cropMinimumLL_;
         }
         /**
-         * <code>optional int32 cropMinimumLL = 1;</code>
+         * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
          */
         public Builder setCropMinimumLL(int value) {
           bitField0_ |= 0x00000001;
@@ -1773,7 +1811,7 @@ public final class Crops {
           return this;
         }
         /**
-         * <code>optional int32 cropMinimumLL = 1;</code>
+         * <code>optional int32 cropMinimumLL = 1 [default = 0];</code>
          */
         public Builder clearCropMinimumLL() {
           bitField0_ = (bitField0_ & ~0x00000001);
@@ -1782,21 +1820,21 @@ public final class Crops {
           return this;
         }
 
-        private int cropMaximumLL_ ;
+        private int cropMaximumLL_ = 15;
         /**
-         * <code>optional int32 cropMaximumLL = 2;</code>
+         * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
          */
         public boolean hasCropMaximumLL() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
         /**
-         * <code>optional int32 cropMaximumLL = 2;</code>
+         * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
          */
         public int getCropMaximumLL() {
           return cropMaximumLL_;
         }
         /**
-         * <code>optional int32 cropMaximumLL = 2;</code>
+         * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
          */
         public Builder setCropMaximumLL(int value) {
           bitField0_ |= 0x00000002;
@@ -1805,11 +1843,11 @@ public final class Crops {
           return this;
         }
         /**
-         * <code>optional int32 cropMaximumLL = 2;</code>
+         * <code>optional int32 cropMaximumLL = 2 [default = 15];</code>
          */
         public Builder clearCropMaximumLL() {
           bitField0_ = (bitField0_ & ~0x00000002);
-          cropMaximumLL_ = 0;
+          cropMaximumLL_ = 15;
           onChanged();
           return this;
         }
@@ -1952,13 +1990,13 @@ public final class Crops {
     public static final int CROPNAME_FIELD_NUMBER = 2;
     private java.lang.Object cropName_;
     /**
-     * <code>required string cropName = 2;</code>
+     * <code>required string cropName = 2 [default = ""];</code>
      */
     public boolean hasCropName() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required string cropName = 2;</code>
+     * <code>required string cropName = 2 [default = ""];</code>
      */
     public java.lang.String getCropName() {
       java.lang.Object ref = cropName_;
@@ -1975,7 +2013,7 @@ public final class Crops {
       }
     }
     /**
-     * <code>required string cropName = 2;</code>
+     * <code>required string cropName = 2 [default = ""];</code>
      */
     public com.google.protobuf.ByteString
         getCropNameBytes() {
@@ -2078,13 +2116,13 @@ public final class Crops {
     public static final int CROPTIER_FIELD_NUMBER = 5;
     private int cropTier_;
     /**
-     * <code>required int32 cropTier = 5;</code>
+     * <code>required int32 cropTier = 5 [default = 1];</code>
      */
     public boolean hasCropTier() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>required int32 cropTier = 5;</code>
+     * <code>required int32 cropTier = 5 [default = 1];</code>
      */
     public int getCropTier() {
       return cropTier_;
@@ -2093,13 +2131,13 @@ public final class Crops {
     public static final int CROPGROWTHDURATION_FIELD_NUMBER = 6;
     private java.lang.Object cropGrowthDuration_;
     /**
-     * <code>optional string cropGrowthDuration = 6;</code>
+     * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
      */
     public boolean hasCropGrowthDuration() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional string cropGrowthDuration = 6;</code>
+     * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
      */
     public java.lang.String getCropGrowthDuration() {
       java.lang.Object ref = cropGrowthDuration_;
@@ -2116,7 +2154,7 @@ public final class Crops {
       }
     }
     /**
-     * <code>optional string cropGrowthDuration = 6;</code>
+     * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
      */
     public com.google.protobuf.ByteString
         getCropGrowthDurationBytes() {
@@ -2258,17 +2296,60 @@ public final class Crops {
       }
     }
 
+    public static final int CROPPOISON_FIELD_NUMBER = 11;
+    private java.lang.Object cropPoison_;
+    /**
+     * <code>optional string cropPoison = 11 [default = ""];</code>
+     */
+    public boolean hasCropPoison() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    /**
+     * <code>optional string cropPoison = 11 [default = ""];</code>
+     */
+    public java.lang.String getCropPoison() {
+      java.lang.Object ref = cropPoison_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          cropPoison_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string cropPoison = 11 [default = ""];</code>
+     */
+    public com.google.protobuf.ByteString
+        getCropPoisonBytes() {
+      java.lang.Object ref = cropPoison_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        cropPoison_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       cropType_ = com.estebes.usefulcrops.crops.Crops.CropInfo.CropType.CROP_PLANT_1;
       cropName_ = "";
       cropDiscoveredBy_ = "estebes";
       cropAttributes_ = "";
-      cropTier_ = 0;
+      cropTier_ = 1;
       cropGrowthDuration_ = "";
       cropColor_ = "#FFFFFF";
       cropDrops_ = com.estebes.usefulcrops.crops.Crops.CropInfo.CropDrops.getDefaultInstance();
       cropConditions_ = com.estebes.usefulcrops.crops.Crops.CropInfo.CropConditions.getDefaultInstance();
       cropBaseSeed_ = "";
+      cropPoison_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2335,6 +2416,9 @@ public final class Crops {
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         output.writeBytes(10, getCropBaseSeedBytes());
       }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(11, getCropPoisonBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2383,6 +2467,10 @@ public final class Crops {
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(10, getCropBaseSeedBytes());
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(11, getCropPoisonBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2511,7 +2599,7 @@ public final class Crops {
         bitField0_ = (bitField0_ & ~0x00000004);
         cropAttributes_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
-        cropTier_ = 0;
+        cropTier_ = 1;
         bitField0_ = (bitField0_ & ~0x00000010);
         cropGrowthDuration_ = "";
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -2531,6 +2619,8 @@ public final class Crops {
         bitField0_ = (bitField0_ & ~0x00000100);
         cropBaseSeed_ = "";
         bitField0_ = (bitField0_ & ~0x00000200);
+        cropPoison_ = "";
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
 
@@ -2607,6 +2697,10 @@ public final class Crops {
           to_bitField0_ |= 0x00000200;
         }
         result.cropBaseSeed_ = cropBaseSeed_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.cropPoison_ = cropPoison_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2663,6 +2757,11 @@ public final class Crops {
         if (other.hasCropBaseSeed()) {
           bitField0_ |= 0x00000200;
           cropBaseSeed_ = other.cropBaseSeed_;
+          onChanged();
+        }
+        if (other.hasCropPoison()) {
+          bitField0_ |= 0x00000400;
+          cropPoison_ = other.cropPoison_;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -2751,13 +2850,13 @@ public final class Crops {
 
       private java.lang.Object cropName_ = "";
       /**
-       * <code>required string cropName = 2;</code>
+       * <code>required string cropName = 2 [default = ""];</code>
        */
       public boolean hasCropName() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required string cropName = 2;</code>
+       * <code>required string cropName = 2 [default = ""];</code>
        */
       public java.lang.String getCropName() {
         java.lang.Object ref = cropName_;
@@ -2774,7 +2873,7 @@ public final class Crops {
         }
       }
       /**
-       * <code>required string cropName = 2;</code>
+       * <code>required string cropName = 2 [default = ""];</code>
        */
       public com.google.protobuf.ByteString
           getCropNameBytes() {
@@ -2790,7 +2889,7 @@ public final class Crops {
         }
       }
       /**
-       * <code>required string cropName = 2;</code>
+       * <code>required string cropName = 2 [default = ""];</code>
        */
       public Builder setCropName(
           java.lang.String value) {
@@ -2803,7 +2902,7 @@ public final class Crops {
         return this;
       }
       /**
-       * <code>required string cropName = 2;</code>
+       * <code>required string cropName = 2 [default = ""];</code>
        */
       public Builder clearCropName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -2812,7 +2911,7 @@ public final class Crops {
         return this;
       }
       /**
-       * <code>required string cropName = 2;</code>
+       * <code>required string cropName = 2 [default = ""];</code>
        */
       public Builder setCropNameBytes(
           com.google.protobuf.ByteString value) {
@@ -2977,21 +3076,21 @@ public final class Crops {
         return this;
       }
 
-      private int cropTier_ ;
+      private int cropTier_ = 1;
       /**
-       * <code>required int32 cropTier = 5;</code>
+       * <code>required int32 cropTier = 5 [default = 1];</code>
        */
       public boolean hasCropTier() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>required int32 cropTier = 5;</code>
+       * <code>required int32 cropTier = 5 [default = 1];</code>
        */
       public int getCropTier() {
         return cropTier_;
       }
       /**
-       * <code>required int32 cropTier = 5;</code>
+       * <code>required int32 cropTier = 5 [default = 1];</code>
        */
       public Builder setCropTier(int value) {
         bitField0_ |= 0x00000010;
@@ -3000,24 +3099,24 @@ public final class Crops {
         return this;
       }
       /**
-       * <code>required int32 cropTier = 5;</code>
+       * <code>required int32 cropTier = 5 [default = 1];</code>
        */
       public Builder clearCropTier() {
         bitField0_ = (bitField0_ & ~0x00000010);
-        cropTier_ = 0;
+        cropTier_ = 1;
         onChanged();
         return this;
       }
 
       private java.lang.Object cropGrowthDuration_ = "";
       /**
-       * <code>optional string cropGrowthDuration = 6;</code>
+       * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
        */
       public boolean hasCropGrowthDuration() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional string cropGrowthDuration = 6;</code>
+       * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
        */
       public java.lang.String getCropGrowthDuration() {
         java.lang.Object ref = cropGrowthDuration_;
@@ -3034,7 +3133,7 @@ public final class Crops {
         }
       }
       /**
-       * <code>optional string cropGrowthDuration = 6;</code>
+       * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
        */
       public com.google.protobuf.ByteString
           getCropGrowthDurationBytes() {
@@ -3050,7 +3149,7 @@ public final class Crops {
         }
       }
       /**
-       * <code>optional string cropGrowthDuration = 6;</code>
+       * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
        */
       public Builder setCropGrowthDuration(
           java.lang.String value) {
@@ -3063,7 +3162,7 @@ public final class Crops {
         return this;
       }
       /**
-       * <code>optional string cropGrowthDuration = 6;</code>
+       * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
        */
       public Builder clearCropGrowthDuration() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -3072,7 +3171,7 @@ public final class Crops {
         return this;
       }
       /**
-       * <code>optional string cropGrowthDuration = 6;</code>
+       * <code>optional string cropGrowthDuration = 6 [default = ""];</code>
        */
       public Builder setCropGrowthDurationBytes(
           com.google.protobuf.ByteString value) {
@@ -3465,6 +3564,82 @@ public final class Crops {
   }
   bitField0_ |= 0x00000200;
         cropBaseSeed_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object cropPoison_ = "";
+      /**
+       * <code>optional string cropPoison = 11 [default = ""];</code>
+       */
+      public boolean hasCropPoison() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      /**
+       * <code>optional string cropPoison = 11 [default = ""];</code>
+       */
+      public java.lang.String getCropPoison() {
+        java.lang.Object ref = cropPoison_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            cropPoison_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string cropPoison = 11 [default = ""];</code>
+       */
+      public com.google.protobuf.ByteString
+          getCropPoisonBytes() {
+        java.lang.Object ref = cropPoison_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          cropPoison_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string cropPoison = 11 [default = ""];</code>
+       */
+      public Builder setCropPoison(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        cropPoison_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string cropPoison = 11 [default = ""];</code>
+       */
+      public Builder clearCropPoison() {
+        bitField0_ = (bitField0_ & ~0x00000400);
+        cropPoison_ = getDefaultInstance().getCropPoison();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string cropPoison = 11 [default = ""];</code>
+       */
+      public Builder setCropPoisonBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        cropPoison_ = value;
         onChanged();
         return this;
       }
@@ -4197,26 +4372,28 @@ public final class Crops {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013crops.proto\"\236\005\n\010CropInfo\0222\n\010cropType\030\001" +
-      " \002(\0162\022.CropInfo.CropType:\014CROP_PLANT_1\022\020" +
-      "\n\010cropName\030\002 \002(\t\022!\n\020cropDiscoveredBy\030\003 \001" +
-      "(\t:\007estebes\022\030\n\016cropAttributes\030\004 \001(\t:\000\022\020\n" +
-      "\010cropTier\030\005 \002(\005\022\032\n\022cropGrowthDuration\030\006 " +
-      "\001(\t\022\032\n\tcropColor\030\007 \002(\t:\007#FFFFFF\022&\n\tcropD" +
-      "rops\030\010 \001(\0132\023.CropInfo.CropDrops\0220\n\016cropC" +
-      "onditions\030\t \001(\0132\030.CropInfo.CropCondition" +
-      "s\022\026\n\014cropBaseSeed\030\n \001(\t:\000\032z\n\tCropDrops\022\022" +
-      "\n\010cropDrop\030\001 \002(\t:\000\022\034\n\016cropDropChance\030\002 \002",
-      "(\002:\0040.95\022\027\n\017cropSpecialDrop\030\003 \001(\t\022\"\n\025cro" +
-      "pSpecialDropChance\030\004 \001(\002:\0030.1\032o\n\016CropCon" +
-      "ditions\022\025\n\rcropMinimumLL\030\001 \001(\005\022\025\n\rcropMa" +
-      "ximumLL\030\002 \001(\005\022\022\n\010cropRoot\030\003 \001(\t:\000\022\033\n\014cro" +
-      "pIsRootOD\030\004 \001(\010:\005false\"f\n\010CropType\022\021\n\rCR" +
-      "OP_FLOWER_1\020\000\022\021\n\rCROP_FLOWER_2\020\001\022\020\n\014CROP" +
-      "_PLANT_1\020\002\022\020\n\014CROP_PLANT_2\020\003\022\020\n\014CROP_PLA" +
-      "NT_3\020\004\"(\n\tCropsList\022\033\n\010cropInfo\030\001 \003(\0132\t." +
-      "CropInfoB&\n\035com.estebes.usefulcrops.crop" +
-      "sB\005Crops"
+      "\n\013crops.proto\"\355\005\n\010CropInfo\0222\n\010cropType\030\001" +
+      " \002(\0162\022.CropInfo.CropType:\014CROP_PLANT_1\022\022" +
+      "\n\010cropName\030\002 \002(\t:\000\022!\n\020cropDiscoveredBy\030\003" +
+      " \001(\t:\007estebes\022\030\n\016cropAttributes\030\004 \001(\t:\000\022" +
+      "\023\n\010cropTier\030\005 \002(\005:\0011\022\034\n\022cropGrowthDurati" +
+      "on\030\006 \001(\t:\000\022\032\n\tcropColor\030\007 \002(\t:\007#FFFFFF\022&" +
+      "\n\tcropDrops\030\010 \001(\0132\023.CropInfo.CropDrops\0220" +
+      "\n\016cropConditions\030\t \001(\0132\030.CropInfo.CropCo" +
+      "nditions\022\026\n\014cropBaseSeed\030\n \001(\t:\000\022\024\n\ncrop" +
+      "Poison\030\013 \001(\t:\000\032z\n\tCropDrops\022\022\n\010cropDrop\030",
+      "\001 \002(\t:\000\022\034\n\016cropDropChance\030\002 \002(\002:\0040.95\022\031\n" +
+      "\017cropSpecialDrop\030\003 \001(\t:\000\022 \n\025cropSpecialD" +
+      "ropChance\030\004 \001(\002:\0010\032v\n\016CropConditions\022\030\n\r" +
+      "cropMinimumLL\030\001 \001(\005:\0010\022\031\n\rcropMaximumLL\030" +
+      "\002 \001(\005:\00215\022\022\n\010cropRoot\030\003 \001(\t:\000\022\033\n\014cropIsR" +
+      "ootOD\030\004 \001(\010:\005false\"\220\001\n\010CropType\022\021\n\rCROP_" +
+      "FLOWER_1\020\000\022\021\n\rCROP_FLOWER_2\020\001\022\020\n\014CROP_PL" +
+      "ANT_1\020\002\022\020\n\014CROP_PLANT_2\020\003\022\020\n\014CROP_PLANT_" +
+      "3\020\004\022\023\n\017CROP_MUSHROOM_1\020\005\022\023\n\017CROP_MUSHROO" +
+      "M_2\020\006\"(\n\tCropsList\022\033\n\010cropInfo\030\001 \003(\0132\t.C",
+      "ropInfoB&\n\035com.estebes.usefulcrops.crops" +
+      "B\005Crops"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4235,7 +4412,7 @@ public final class Crops {
     internal_static_CropInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_CropInfo_descriptor,
-        new java.lang.String[] { "CropType", "CropName", "CropDiscoveredBy", "CropAttributes", "CropTier", "CropGrowthDuration", "CropColor", "CropDrops", "CropConditions", "CropBaseSeed", });
+        new java.lang.String[] { "CropType", "CropName", "CropDiscoveredBy", "CropAttributes", "CropTier", "CropGrowthDuration", "CropColor", "CropDrops", "CropConditions", "CropBaseSeed", "CropPoison", });
     internal_static_CropInfo_CropDrops_descriptor =
       internal_static_CropInfo_descriptor.getNestedTypes().get(0);
     internal_static_CropInfo_CropDrops_fieldAccessorTable = new

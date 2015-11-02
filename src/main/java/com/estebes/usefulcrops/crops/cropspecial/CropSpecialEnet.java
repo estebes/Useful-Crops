@@ -1,23 +1,22 @@
-package com.estebes.usefulcrops.crops.croptypes;
+package com.estebes.usefulcrops.crops.cropspecial;
 
 import com.estebes.usefulcrops.crops.CropProperties;
 import com.estebes.usefulcrops.reference.Reference;
-import com.estebes.usefulcrops.util.SpriteHelper;
-import com.estebes.usefulcrops.util.XorShiftRandom;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.ICropTile;
+import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public class CropPlantType1 extends CropCard {
+public class CropSpecialEnet extends CropCard {
     private CropProperties cropProperties;
-    private final XorShiftRandom specialDropRandom = new XorShiftRandom(100);
 
-    public CropPlantType1(CropProperties cropProperties) {
-        this.cropProperties = cropProperties;
+    public CropSpecialEnet() {
     }
 
     @Override
@@ -27,27 +26,27 @@ public class CropPlantType1 extends CropCard {
 
     @Override
     public String displayName() {
-        return this.cropProperties.getCropName();
+        return "E-net Crop";
     }
 
     @Override
     public String discoveredBy() {
-        return this.cropProperties.getCropDiscoveredBy();
+        return "Player";
     }
 
     @Override
     public String name() {
-        return this.cropProperties.getCropName().toLowerCase();
+        return "e-net crop";
     }
 
     @Override
     public String[] attributes() {
-        return this.cropProperties.getCropAttributes();
+        return null;
     }
 
     @Override
     public int tier() {
-        return this.cropProperties.getCropTier();
+        return 15;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class CropPlantType1 extends CropCard {
 
     @Override
     public boolean canBeHarvested(ICropTile crop) {
-        return crop.getSize() == 4;
+        return false;
     }
 
     @Override
@@ -82,26 +81,17 @@ public class CropPlantType1 extends CropCard {
 
     @Override
     public int growthDuration(ICropTile crop) {
-        if(this.cropProperties.getCropGrowthDuration() != null && this.cropProperties.getCropGrowthDuration().length
-                >= this.maxSize()) {
-            return this.cropProperties.getCropGrowthDuration()[crop.getSize() - 1];
-        }
         return crop.getSize() == 3 ? 2000 : 800;
     }
 
     @Override
     public ItemStack getGain(ICropTile crop) {
-        if(this.cropProperties.getCropSpecialDrop() != null) {
-            if(this.cropProperties.getCropSpecialDropChance() * 100 > specialDropRandom.nextInt()) {
-                return this.cropProperties.getCropSpecialDrop();
-            }
-        }
-        return this.cropProperties.getCropDrop();
+        return null;
     }
 
     @Override
     public float dropGainChance() {
-        return this.cropProperties.getCropDropChance();
+        return 0.0F;
     }
 
     @Override
@@ -126,16 +116,16 @@ public class CropPlantType1 extends CropCard {
     public void registerSprites(IIconRegister iconRegister) {
         this.textures = new IIcon[this.maxSize()];
         for (int size = 1; size <= this.maxSize() - 1; size++) {
-            this.textures[(size - 1)] = iconRegister.registerIcon(Reference.LOWERCASE_MOD_ID + ":" + this.cropProperties.getCropType() + "_" + size);
+            this.textures[(size - 1)] = iconRegister.registerIcon(Reference.LOWERCASE_MOD_ID + ":" + "CropPlantType1_" + size);
         }
-        try {
-            this.textures[(this.maxSize() - 1)] = SpriteHelper.registerCustomSprite(iconRegister, new SpriteHelper().getImage("/assets/usefulcrops/textures/blocks/" +
-                            this.cropProperties.getCropType() + "_" + this.maxSize() + "_bg.png", "/assets/usefulcrops/textures/blocks/" +
-                            this.cropProperties.getCropType() + "_" + this.maxSize() + "_fg.png", this.cropProperties.getCropColor()),
-                    this.cropProperties.getCropType() + this.maxSize() + this.cropProperties.getCropName(), 16);
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
+    }
+
+    @Override
+    public void tick(ICropTile crop) {
+        TileEntity teCrop = (TileEntity) crop;
+        TileEntity teAux = teCrop.getWorldObj().getTileEntity(teCrop.xCoord, teCrop.yCoord + 1, teCrop.zCoord);
+        if((teAux != null) && (teAux instanceof IEnergySink)) {
+            ((IEnergySink)teAux).injectEnergy(ForgeDirection.DOWN, 256.0D, 1.0D);
         }
     }
 }

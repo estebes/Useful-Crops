@@ -1,28 +1,26 @@
-package com.estebes.usefulcrops.crops.croptypes;
+package com.estebes.usefulcrops.crops;
 
-import com.estebes.usefulcrops.crops.CropProperties;
 import com.estebes.usefulcrops.reference.Reference;
-import com.estebes.usefulcrops.util.SpriteHelper;
 import com.estebes.usefulcrops.util.XorShiftRandom;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.ICropTile;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
-public class CropPlantType1 extends CropCard {
-    private CropProperties cropProperties;
-    private final XorShiftRandom specialDropRandom = new XorShiftRandom(100);
+public class CropCommon extends CropCard {
+    protected CropProperties cropProperties;
 
-    public CropPlantType1(CropProperties cropProperties) {
+    public CropCommon(CropProperties cropProperties) {
         this.cropProperties = cropProperties;
     }
 
     @Override
     public String owner() {
-        return "UsefulCrops";
+        return Reference.MOD_ID;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class CropPlantType1 extends CropCard {
 
     @Override
     public int maxSize() {
-        return 4;
+        return 0;
     }
 
     @Override
@@ -67,30 +65,27 @@ public class CropPlantType1 extends CropCard {
 
     @Override
     public int getOptimalHavestSize(ICropTile crop) {
-        return 4;
+        return 0;
     }
 
     @Override
     public boolean canBeHarvested(ICropTile crop) {
-        return crop.getSize() == 4;
+        return false;
     }
 
     @Override
     public byte getSizeAfterHarvest(ICropTile crop) {
-        return 2;
+        return 0;
     }
 
     @Override
     public int growthDuration(ICropTile crop) {
-        if(this.cropProperties.getCropGrowthDuration() != null && this.cropProperties.getCropGrowthDuration().length
-                >= this.maxSize()) {
-            return this.cropProperties.getCropGrowthDuration()[crop.getSize() - 1];
-        }
-        return crop.getSize() == 3 ? 2000 : 800;
+        return 500;
     }
 
     @Override
     public ItemStack getGain(ICropTile crop) {
+        XorShiftRandom specialDropRandom = new XorShiftRandom(100);
         if(this.cropProperties.getCropSpecialDrop() != null) {
             if(this.cropProperties.getCropSpecialDropChance() * 100 > specialDropRandom.nextInt()) {
                 return this.cropProperties.getCropSpecialDrop();
@@ -124,18 +119,16 @@ public class CropPlantType1 extends CropCard {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerSprites(IIconRegister iconRegister) {
-        this.textures = new IIcon[this.maxSize()];
-        for (int size = 1; size <= this.maxSize() - 1; size++) {
-            this.textures[(size - 1)] = iconRegister.registerIcon(Reference.LOWERCASE_MOD_ID + ":" + this.cropProperties.getCropType() + "_" + size);
+    }
+
+    @Override
+    public boolean onEntityCollision(ICropTile crop, Entity entity) {
+        if (entity instanceof EntityLivingBase) {
+            if(this.cropProperties.getCropDebuffs() != null && crop.getSize() >= 2) {
+                ((EntityLivingBase) entity).addPotionEffect(this.cropProperties.getCropDebuffs());
+            }
+            return ((EntityLivingBase) entity).isSprinting();
         }
-        try {
-            this.textures[(this.maxSize() - 1)] = SpriteHelper.registerCustomSprite(iconRegister, new SpriteHelper().getImage("/assets/usefulcrops/textures/blocks/" +
-                            this.cropProperties.getCropType() + "_" + this.maxSize() + "_bg.png", "/assets/usefulcrops/textures/blocks/" +
-                            this.cropProperties.getCropType() + "_" + this.maxSize() + "_fg.png", this.cropProperties.getCropColor()),
-                    this.cropProperties.getCropType() + this.maxSize() + this.cropProperties.getCropName(), 16);
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        return false;
     }
 }

@@ -1,8 +1,6 @@
 package com.estebes.usefulcrops;
 
 import com.estebes.usefulcrops.crops.CropParser;
-import com.estebes.usefulcrops.init.CropInit;
-import com.estebes.usefulcrops.init.TestInit;
 import com.estebes.usefulcrops.proxy.ServerProxy;
 import com.estebes.usefulcrops.reference.Reference;
 import cpw.mods.fml.common.Mod;

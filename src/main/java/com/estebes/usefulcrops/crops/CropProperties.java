@@ -1,13 +1,13 @@
 package com.estebes.usefulcrops.crops;
 
 import com.estebes.usefulcrops.crops.Crops.CropInfo;
+import com.estebes.usefulcrops.util.Util;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,46 +51,23 @@ public class CropProperties {
 
     // CropGrowthDuration
     public int[] getCropGrowthDuration() {
-        return null;
+        ArrayList<Integer> cropGrowthDuration = new ArrayList<Integer>();
+        Pattern pattern = Pattern.compile("(\\d+)");
+        Matcher matcher = pattern.matcher(this.cropInfo.getCropGrowthDuration());
+        while (matcher.find()) {
+            if (matcher.group(1) != null) {
+                cropGrowthDuration.add(Integer.valueOf(matcher.group(1)));
+            }
+        }
+        return Util.getIntArray(cropGrowthDuration);
     }
 
     // CropColor
-    public BufferedImage getCropIcon() {
-        BufferedImage background = null;
-        BufferedImage foreground = null;
-        try {
-            background = ImageIO.read(getClass().getResource("/assets/usefulcrops/textures/blocks/" +
-                    this.cropInfo.getCropType().toString().toLowerCase() + "_bg.png"));
-            foreground = ImageIO.read(getClass().getResource("/assets/usefulcrops/textures/blocks/" +
-                    this.cropInfo.getCropType().toString().toLowerCase() + "_fg.png"));
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        // Paint Crop
-        BufferedImage aux = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D aux_g = aux.createGraphics();
-        Color fgCropColor = Color.decode(this.cropInfo.getCropColor());
-        aux_g.drawImage(foreground, null, 0, 0);
-        aux_g.setColor(fgCropColor);
-        aux_g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.5f));
-        aux_g.fillRect(0, 0, foreground.getWidth(), foreground.getHeight());
-
-        // Merge Images
-        BufferedImage finalImage = new BufferedImage(background.getWidth(), background.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D final_g = finalImage.createGraphics();
-        final_g.drawImage(background, 0, 0, null);
-        final_g.drawImage(aux, 0, 0, null);
-
-        // Clean-up
-        aux_g.dispose();
-        final_g.dispose();
-
-        // Done
-        return finalImage;
+    public Color getCropColor() {
+        return Color.decode(this.cropInfo.getCropColor());
     }
 
-    // CropDrops
+    // CropDrop
     public ItemStack getCropDrop() {
         String modID = "";
         String itemID = "";
@@ -116,5 +93,59 @@ public class CropProperties {
 
     public float getCropDropChance() {
         return this.cropInfo.getCropDrops().getCropDropChance();
+    }
+
+    // CropSpecialDrop
+    public ItemStack getCropSpecialDrop() {
+        String modID = "";
+        String itemID = "";
+        int metaData = 0;
+        Pattern pattern = Pattern.compile("([^:]+)([:])([^@]+)([@])?(\\d+)?");
+        Matcher matcher = pattern.matcher(this.cropInfo.getCropDrops().getCropSpecialDrop());
+        if (matcher.matches()) {
+            if (matcher.group(1) != null) {
+                modID = matcher.group(1);
+            }
+            if (matcher.group(3) != null) {
+                itemID = matcher.group(3);
+            }
+            if (matcher.group(5) != null) {
+                metaData = Integer.valueOf(matcher.group(5));
+            }
+        }
+        if(GameRegistry.findItem(modID, itemID) != null) {
+            return new ItemStack(GameRegistry.findItem(modID, itemID), 1, metaData);
+        }
+        return null;
+    }
+
+    public float getCropSpecialDropChance() {
+        return this.cropInfo.getCropDrops().getCropSpecialDropChance() > 0.5F ? 0.5F :
+                this.cropInfo.getCropDrops().getCropSpecialDropChance();
+    }
+
+    // CropEffects
+    public PotionEffect getCropDebuffs() {
+        String potionName = "";
+        Pattern pattern = Pattern.compile("([^@]+)([@])?(\\d+)?");
+        Matcher matcher = pattern.matcher(this.cropInfo.getCropPoison());
+        if (matcher.matches()) {
+            if (matcher.group(1) != null) {
+                potionName = matcher.group(1);
+            }
+        }
+        for(int potion = 0; potion < Potion.potionTypes.length; potion++) {
+            if(Potion.potionTypes[potion] != null) {
+                if(Potion.potionTypes[potion].getName().equals(potionName)) {
+                    System.out.println(Potion.potionTypes[potion].getId());
+                    return new PotionEffect(Potion.potionTypes[potion].getId(), 64, 50);
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getCropType() {
+        return this.cropInfo.getCropType().toString().toLowerCase();
     }
 }

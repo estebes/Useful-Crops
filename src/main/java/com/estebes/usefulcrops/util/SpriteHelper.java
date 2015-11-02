@@ -13,6 +13,8 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -21,6 +23,42 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public final class SpriteHelper {
+    public BufferedImage getImage(String bg, String fg, Color cropColor) {
+        BufferedImage background = null;
+        BufferedImage foreground = null;
+        try {
+            background = ImageIO.read(getClass().getResource(bg));
+            foreground = ImageIO.read(getClass().getResource(fg));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        // Paint Crop
+        BufferedImage aux = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D aux_g = aux.createGraphics();
+        aux_g.drawImage(foreground, null, 0, 0);
+        aux_g.setColor(cropColor);
+        aux_g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.4f));
+        aux_g.fillRect(0, 0, foreground.getWidth(), foreground.getHeight());
+
+        // Merge Images
+        BufferedImage finalImage = new BufferedImage(background.getWidth(), background.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D final_g = finalImage.createGraphics();
+        final_g.drawImage(background, 0, 0, null);
+        final_g.drawImage(aux, 0, 0, null);
+
+        // Clean-up
+        aux_g.dispose();
+        final_g.dispose();
+
+        // Done
+        return finalImage;
+    }
+
+    /*
+    Credit to Master801
+    https://github.com/master801/801-Library/blob/1669728d90a7f6ecae1eef6f56a17b033fd7fe45/src/test/java/coretest/SpriteHelper__NO_DEPENDENCIES.java
+    */
     public static IIcon registerCustomSprite(IIconRegister iconRegistry, BufferedImage bufferedImage, final String spriteName, int spriteDimensions) throws IOException {
         TextureAtlasSprite sprite = null;
         if (iconRegistry == null || bufferedImage == null || Strings.isNullOrEmpty(spriteName)) {
