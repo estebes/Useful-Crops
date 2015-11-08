@@ -11,6 +11,7 @@ import ic2.api.info.Info;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -19,9 +20,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CropSpecialEnet extends CropCard {
+public class CropSpecialWTF extends CropCard {
+    private CropProperties cropProperties;
 
-    public CropSpecialEnet() {
+    public CropSpecialWTF() {
     }
 
     @Override
@@ -31,17 +33,17 @@ public class CropSpecialEnet extends CropCard {
 
     @Override
     public String displayName() {
-        return "E-net Crop";
+        return "Thunder Crop";
     }
 
     @Override
     public String discoveredBy() {
-        return "Player, Aroma, Speiger";
+        return "Player";
     }
 
     @Override
     public String name() {
-        return "e-net crop";
+        return "thunder crop";
     }
 
     @Override
@@ -128,22 +130,7 @@ public class CropSpecialEnet extends CropCard {
     @Override
     public void tick(ICropTile crop) {
         TileEntity teCrop = (TileEntity) crop;
-        Map<int[], ForgeDirection> coordsAux = new HashMap<int[], ForgeDirection>();
-        coordsAux.put(new int[]{-1, 0, 0}, ForgeDirection.WEST);
-        coordsAux.put(new int[]{1, 0, 0}, ForgeDirection.EAST);
-        coordsAux.put(new int[]{0, 1, 0}, ForgeDirection.UP);
-        coordsAux.put(new int[]{0, 0, 1}, ForgeDirection.NORTH);
-        coordsAux.put(new int[]{0, 0, -1}, ForgeDirection.SOUTH);
-        for(int[] coords : coordsAux.keySet()) {
-            TileEntity teAux = teCrop.getWorldObj().getTileEntity(teCrop.xCoord + coords[0], teCrop.yCoord + coords[1], teCrop.zCoord + coords[2]);
-            if((teAux != null) && (teAux instanceof IEnergySink)) {
-                if(((IEnergySink)teAux).acceptsEnergyFrom(teCrop, coordsAux.get(coords).getOpposite())) {
-                    ((IEnergySink)teAux).injectEnergy(coordsAux.get(coords), 1.0D * (crop.getGain() * crop.getGain()), 256.0D);
-                    teAux.markDirty();
-                    break;
-                }
-            }
-        }
+        teCrop.getWorldObj().addWeatherEffect(new EntityLightningBolt(teCrop.getWorldObj(), teCrop.xCoord, teCrop.yCoord, teCrop.zCoord));
     }
 
     @Override
