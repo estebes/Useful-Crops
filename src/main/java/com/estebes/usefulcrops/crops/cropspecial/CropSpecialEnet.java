@@ -2,15 +2,23 @@ package com.estebes.usefulcrops.crops.cropspecial;
 
 import com.estebes.usefulcrops.crops.CropProperties;
 import com.estebes.usefulcrops.reference.Reference;
+import com.estebes.usefulcrops.util.EventListener;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.ICropTile;
+import ic2.api.energy.EnergyNet;
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
+import ic2.api.energy.tile.IEnergySource;
+import ic2.core.energy.EnergyNetLocal;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class CropSpecialEnet extends CropCard {
@@ -122,10 +130,63 @@ public class CropSpecialEnet extends CropCard {
 
     @Override
     public void tick(ICropTile crop) {
-        TileEntity teCrop = (TileEntity) crop;
-        TileEntity teAux = teCrop.getWorldObj().getTileEntity(teCrop.xCoord, teCrop.yCoord + 1, teCrop.zCoord);
-        if((teAux != null) && (teAux instanceof IEnergySink)) {
-            ((IEnergySink)teAux).injectEnergy(ForgeDirection.DOWN, 256.0D, 1.0D);
-        }
+    	TileEntity te = (TileEntity)crop;
+    	if (EnergyNet.instance.getTileEntity(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord) == null) {
+    		MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(new FakeTileEntity(te)));
+    	}
+    }
+    
+    /**
+     * This method returns the amount of EU the crop emits every tick.
+     */
+    private double producedEnergy(ICropTile crop) {
+    	return crop.getSize() == maxSize() ? 1D : 1D;
+    }
+    
+    public class FakeTileEntity extends TileEntity implements IEnergySource {
+    	
+    	private final TileEntity crop;
+    	
+    	private FakeTileEntity(TileEntity parent) {
+    		this.xCoord = parent.xCoord;
+    		this.yCoord = parent.yCoord;
+    		this.zCoord = parent.zCoord;
+    		this.worldObj = parent.getWorldObj();
+    		if (!parent.isInvalid()) {
+    			this.validate();
+    			//If the parent isn't valid, the tile doesn't get registered and we try gain the next tick.
+    		}
+    		crop = parent;
+    		EventListener.addTileEntityTick(this);
+		}
+
+		@Override
+		public boolean emitsEnergyTo(TileEntity receiver,
+				ForgeDirection direction) {
+			return true;
+		}
+
+		@Override
+		public double getOfferedEnergy() {
+			return producedEnergy((ICropTile)crop); //Emitted energy per tick.
+		}
+
+		@Override
+		public void drawEnergy(double amount) {} // we don't have a buffer
+
+		@Override
+		public int getSourceTier() {
+			return 1;
+		}
+		
+		@Override
+		public void updateEntity() {
+			TileEntity te = worldObj.getTileEntity(xCoord, yCoord, zCoord);
+			if (te != crop || ((ICropTile)te).getCrop() != CropSpecialEnet.this) {
+				MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+				EventListener.removeTileEntityTick(this);
+			}
+		}
+    	
     }
 }
